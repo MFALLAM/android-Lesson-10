@@ -14,7 +14,7 @@ import java.util.Objects;
 
 import ru.tweakup.androidlesson9.observe.Publisher;
 import ru.tweakup.androidlesson9.ui.ListOfNotesFragment;
-
+import ru.tweakup.androidlesson9.ui.StartFragment;
 public class MainActivity extends AppCompatActivity {
     private Navigation navigation;
     private Publisher publisher = new Publisher();
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         navigation = new Navigation(getSupportFragmentManager());
         initToolbar();
-        getNavigation().addFragment(ListOfNotesFragment.newInstance(), false);
+        getNavigation().addFragment(StartFragment.newInstance(), false);
     }
 
     private void initToolbar() {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         searchText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ru.tweakup.androidlesson9.MainActivity.this, query, Toast.LENGTH_SHORT).show();
                 return true;
             }
 
@@ -68,17 +68,17 @@ public class MainActivity extends AppCompatActivity {
         });
         MenuItem sort = menu.findItem(R.id.menu_sort);
         sort.setOnMenuItemClickListener(item -> {
-            Toast.makeText(MainActivity.this, R.string.menu_sort, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ru.tweakup.androidlesson9.MainActivity.this, R.string.menu_sort, Toast.LENGTH_SHORT).show();
             return true;
         });
         MenuItem send = menu.findItem(R.id.menu_send);
         send.setOnMenuItemClickListener(item -> {
-            Toast.makeText(MainActivity.this, R.string.menu_send, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ru.tweakup.androidlesson9.MainActivity.this, R.string.menu_send, Toast.LENGTH_SHORT).show();
             return true;
         });
         MenuItem addPhoto = menu.findItem(R.id.menu_add_photo);
         addPhoto.setOnMenuItemClickListener(item -> {
-            Toast.makeText(MainActivity.this, R.string.menu_add_photo, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ru.tweakup.androidlesson9.MainActivity.this, R.string.menu_add_photo, Toast.LENGTH_SHORT).show();
             return true;
         });
         return true;

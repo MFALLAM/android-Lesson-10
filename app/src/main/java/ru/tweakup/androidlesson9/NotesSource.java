@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Locale;
 
-public class NotesSource implements Parcelable {
+public class NotesSource implements NotesSourceInterface, Parcelable {
     public static final Creator<NotesSource> CREATOR = new Creator<NotesSource>() {
         @Override
         public NotesSource createFromParcel(Parcel in) {
@@ -24,7 +24,6 @@ public class NotesSource implements Parcelable {
     };
     private ArrayList<Note> notes;
     private Resources resources;
-    private int counter = 0;
 
     public NotesSource(Resources resources) {
         this.resources = resources;
@@ -45,65 +44,74 @@ public class NotesSource implements Parcelable {
         return 0;
     }
 
-    public NotesSource init() {
+    @Override
+    public NotesSourceInterface init(NotesSourceResponse notesSourceResponse) {
         Note[] notesArray = new Note[]{
                 new Note(resources.getString(R.string.first_note_title),
                         resources.getString(R.string.first_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.second_note_title),
                         resources.getString(R.string.second_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.third_note_title),
                         resources.getString(R.string.third_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.fourth_note_title),
                         resources.getString(R.string.fourth_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.fifth_note_title),
                         resources.getString(R.string.fifth_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.sixth_note_title),
                         resources.getString(R.string.sixth_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.seventh_note_title),
                         resources.getString(R.string.seventh_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.eighth_note_title),
                         resources.getString(R.string.eighth_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.ninth_note_title),
                         resources.getString(R.string.ninth_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.tenth_note_title),
                         resources.getString(R.string.tenth_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.eleventh_note_title),
                         resources.getString(R.string.eleventh_note_content),
-                        getDateOfCreation(), getColor()),
+                        getDateOfCreation()),
                 new Note(resources.getString(R.string.twelfth_note_title),
                         resources.getString(R.string.twelfth_note_content),
-                        getDateOfCreation(), getColor())
+                        getDateOfCreation())
         };
         Collections.addAll(notes, notesArray);
+        if (notesSourceResponse != null) {
+            notesSourceResponse.initialized(this);
+        }
         return this;
     }
 
+    @Override
     public Note getNote(int position) {
         return notes.get(position);
     }
 
+    @Override
     public int size() {
         return notes.size();
     }
 
+    @Override
     public void deleteNote(int position) {
         notes.remove(position);
     }
 
+    @Override
     public void changeNote(int position, Note note) {
         notes.set(position, note);
     }
 
+    @Override
     public void addNote(Note note) {
         notes.add(note);
     }
@@ -111,16 +119,7 @@ public class NotesSource implements Parcelable {
     public String getDateOfCreation() {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy",
                 Locale.getDefault());
-        return String.format("%s: %s", "Дата создания",
+        return String.format("%s: %s", "Created data",
                 formatter.format(Calendar.getInstance().getTime()));
-    }
-
-    public int getColor() {
-        int[] colors = resources.getIntArray(R.array.colors);
-        int color = colors[counter];
-        if (counter < colors.length - 1) {
-            counter++;
-        } else counter = 0;
-        return color;
     }
 }
